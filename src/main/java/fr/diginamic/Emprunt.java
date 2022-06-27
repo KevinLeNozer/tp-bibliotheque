@@ -1,7 +1,10 @@
 package fr.diginamic;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Emprunt")
@@ -9,20 +12,27 @@ public class Emprunt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "seqEmprunt", strategy = "increment")
     private Integer id;
 
-    @Column(name = "DATE_DEBUT")
+    @Column(name = "DATE_DEBUT", columnDefinition = "TIMESTAMP")
     private LocalDateTime dateDebut;
 
-    @Column(name = "DATE_FIN")
+    @Column(name = "DATE_FIN", columnDefinition = "TIMESTAMP")
     private LocalDateTime dateFin;
 
-    @Column
+    @Column(name = "DELAI")
     private int delai;
 
     @ManyToOne
     @JoinColumn(name = "ID_CLIENT")
     private Client client;
+
+    @ManyToMany
+    @JoinTable(name = "COMPO",
+            joinColumns = @JoinColumn(name = "ID_EMP", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "ID_LIV", referencedColumnName = "ID"))
+    private List<Livre> livres;
 
     public Emprunt() {
     }
@@ -74,6 +84,14 @@ public class Emprunt {
         this.client = client;
     }
 
+    public List<Livre> getLivres() {
+        return livres;
+    }
+
+    public void setLivres(List<Livre> livres) {
+        this.livres = livres;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Emprunt{");
@@ -81,7 +99,8 @@ public class Emprunt {
         sb.append(", dateDebut=").append(dateDebut);
         sb.append(", dateFin=").append(dateFin);
         sb.append(", delai=").append(delai);
-        sb.append(", id_client=").append(client);
+        sb.append(", client=").append(client);
+        sb.append(", livres=").append(livres);
         sb.append('}');
         return sb.toString();
     }

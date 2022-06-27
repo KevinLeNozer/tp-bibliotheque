@@ -1,5 +1,7 @@
 package fr.diginamic;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +9,9 @@ import java.util.List;
 @Entity
 @Table(name = "Client")
 public class Client {
-    @OneToMany(mappedBy = "client")
-    private List<Emprunt> emprunts;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "seqClient", strategy = "increment")
     private Integer id;
 
     @Column(name = "NOM", length = 50, nullable = false, unique = false)
@@ -24,8 +24,7 @@ public class Client {
     public Client() {
     }
 
-    public Client(List<Emprunt> emprunts, Integer id, String nom, String prenom) {
-        this.emprunts = emprunts;
+    public Client(Integer id, String nom, String prenom) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -53,14 +52,6 @@ public class Client {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
-    }
-
-    public List<Emprunt> getEmprunts() {
-        return emprunts;
-    }
-
-    public void setEmprunts(List<Emprunt> emprunts) {
-        this.emprunts = emprunts;
     }
 
     @Override
