@@ -8,22 +8,30 @@ import java.time.LocalDateTime;
 public class Emprunt {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
-    private LocalDateTime date_debut;
+    @Column(name = "DATE_DEBUT")
+    private LocalDateTime dateDebut;
 
-    @Column
-    private LocalDateTime date_fin;
+    @Column(name = "DATE_FIN")
+    private LocalDateTime dateFin;
 
     @Column
     private int delai;
 
     @ManyToOne
-    @JoinColumn(name = "ID")
+    @JoinColumn(name = "ID_CLIENT")
     private Client client;
 
     public Emprunt() {
+    }
+
+    public Emprunt(LocalDateTime dateDebut, LocalDateTime dateFin, int delai, Client client) {
+        this.setDateDebut(dateDebut);
+        this.setDateFin(dateFin);
+        this.setDelai(delai);
+        this.setClient(client);
     }
 
     public Integer getId() {
@@ -34,20 +42,20 @@ public class Emprunt {
         this.id = id;
     }
 
-    public LocalDateTime getDate_debut() {
-        return date_debut;
+    public LocalDateTime getDateDebutt() {
+        return dateDebut;
     }
 
-    public void setDate_debut(LocalDateTime date_debut) {
-        this.date_debut = date_debut;
+    public void setDateDebut(LocalDateTime dateDebut) {
+        this.dateDebut = dateDebut;
     }
 
-    public LocalDateTime getDate_fin() {
-        return date_fin;
+    public LocalDateTime getDateFin() {
+        return dateFin;
     }
 
-    public void setDate_fin(LocalDateTime date_fin) {
-        this.date_fin = date_fin;
+    public void setDateFin(LocalDateTime dateFin) {
+        this.dateFin = dateFin;
     }
 
     public int getDelai() {
@@ -70,8 +78,8 @@ public class Emprunt {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Emprunt{");
         sb.append("id=").append(id);
-        sb.append(", date_debut=").append(date_debut);
-        sb.append(", date_fin=").append(date_fin);
+        sb.append(", dateDebut=").append(dateDebut);
+        sb.append(", dateFin=").append(dateFin);
         sb.append(", delai=").append(delai);
         sb.append(", id_client=").append(client);
         sb.append('}');

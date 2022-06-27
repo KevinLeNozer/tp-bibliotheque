@@ -1,14 +1,13 @@
 package fr.diginamic;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="Livre")
 public class Livre {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Integer id;
 
@@ -17,6 +16,7 @@ public class Livre {
 
     @Column(name = "AUTEUR", length = 50, nullable = false, unique = false)
     private String Auteur;
+
 
     public Livre() {
     }

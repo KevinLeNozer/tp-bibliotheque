@@ -11,16 +11,24 @@ public class Client {
     private List<Emprunt> emprunts;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "NOM", length = 50, nullable = false, unique = false)
-    private String Nom;
+    private String nom;
 
     @Column(name = "PRENOM", length = 50, nullable = false, unique = false)
     private String prenom;
 
 
     public Client() {
+    }
+
+    public Client(List<Emprunt> emprunts, Integer id, String nom, String prenom) {
+        this.emprunts = emprunts;
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
     }
 
     public Integer getId() {
@@ -32,11 +40,11 @@ public class Client {
     }
 
     public String getNom() {
-        return Nom;
+        return nom;
     }
 
     public void setNom(String nom) {
-        Nom = nom;
+        this.nom = nom;
     }
 
     public String getPrenom() {
@@ -59,7 +67,7 @@ public class Client {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Client{");
         sb.append("id=").append(id);
-        sb.append(", Nom='").append(Nom).append('\'');
+        sb.append(", nom='").append(nom).append('\'');
         sb.append(", prenom='").append(prenom).append('\'');
         sb.append('}');
         return sb.toString();
